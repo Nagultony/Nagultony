@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nagul Meera — Designer & Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f5f2ec;
+    --cream: #ede9e0;
+    --accent: #c8502a;
+    --accent2: #2a5cc8;
+    --gold: #d4a847;
+    --muted: #7a7570;
+    --card: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 40px; height: 40px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.2s, height 0.2s;
+    opacity: 0.6;
+  }
+  .cursor.hover { width: 20px; height: 20px; }
+  .cursor-ring.hover { width: 60px; height: 60px; opacity: 0.3; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    mix-blend-mode: multiply;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -3px; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 8rem 3rem 5rem 4rem;
+    background: var(--paper);
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 2rem; height: 1px;
+    background: var(--accent);
+  }
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+  }
+  .hero-name span {
+    display: block;
+    color: var(--accent);
+  }
+  .hero-tagline {
+    font-size: 1rem; font-weight: 300; line-height: 1.7;
+    color: var(--muted); max-width: 360px;
+    margin-bottom: 3rem;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 1rem;
+    background: var(--ink); color: var(--paper);
+    padding: 1rem 2rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none;
+    position: relative; overflow: hidden;
+    transition: color 0.3s ease;
+  }
+  .hero-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--accent);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
+  .hero-cta:hover::before { transform: translateX(0); }
+  .hero-cta span { position: relative; z-index: 1; }
+  .hero-cta .arrow { transition: transform 0.3s ease; position: relative; z-index: 1; }
+  .hero-cta:hover .arrow { transform: translateX(4px); }
+
+  .hero-right {
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .hero-visual {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-circle {
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c8502a22, #2a5cc822);
+    border: 1px solid #c8502a33;
+    position: absolute;
+    animation: pulse 4s ease-in-out infinite;
+  }
+  .hero-circle-2 {
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c8502a11, #d4a84711);
+    border: 1px solid #d4a84733;
+    animation: pulse 4s ease-in-out infinite 1s;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.04); opacity: 1; }
+  }
+  .hero-initials {
+    font-family: 'Syne', sans-serif;
+    font-size: 9rem; font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+    position: absolute;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+  .hero-badge {
+    position: absolute; bottom: 3rem; right: 3rem;
+    width: 110px; height: 110px;
+  }
+  .hero-badge svg {
+    animation: rotate 12s linear infinite;
+  }
+  @keyframes rotate { to { transform: rotate(360deg); } }
+  .hero-badge-center {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: white; font-size: 1.2rem;
+  }
+  .hero-stats {
+    position: absolute; bottom: 3rem; left: 3rem;
+    display: flex; gap: 2.5rem;
+  }
+  .stat-item { color: white; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem; font-weight: 800;
+    line-height: 1;
+    color: var(--gold);
+  }
+  .stat-label {
+    font-size: 0.7rem; font-weight: 300;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.3rem;
+  }
+
+  /* MARQUEE */
+  .marquee-section {
+    background: var(--accent);
+    overflow: hidden;
+    padding: 1rem 0;
+  }
+  .marquee-track {
+    display: flex; gap: 3rem;
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-item {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: white;
+    display: flex; align-items: center; gap: 3rem; flex-shrink: 0;
+  }
+  .marquee-dot { width: 4px; height: 4px; background: rgba(255,255,255,0.5); border-radius: 50%; }
+
+  /* ABOUT */
+  .about {
+    padding: 8rem 4rem;
+    display: grid; grid-template-columns: 1fr 1.6fr;
+    gap: 6rem; align-items: start;
+  }
+  .section-label {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 1.5rem; height: 1px; background: var(--accent);
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+  }
+  .about-text {
+    font-size: 1.05rem; font-weight: 300; line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .about-card {
+    background: var(--cream);
+    padding: 1.5rem;
+    border-left: 2px solid var(--accent);
+  }
+  .about-card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .about-card p {
+    font-size: 0.85rem; font-weight: 300; color: var(--muted);
+    line-height: 1.6;
+  }
+  .skills-wrap {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem;
+  }
+  .skill-tag {
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--ink);
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;
+    transition: all 0.25s ease;
+  }
+  .skill-tag:hover {
+    background: var(--ink); color: var(--paper);
+  }
+
+  /* EXPERIENCE */
+  .experience {
+    padding: 6rem 4rem;
+    background: var(--ink);
+    color: white;
+  }
+  .exp-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 5rem;
+  }
+  .exp-header .section-label { color: var(--gold); }
+  .exp-header .section-label::before { background: var(--gold); }
+  .exp-header .section-title { color: white; }
+  .exp-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 8rem; font-weight: 800;
+    color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+    line-height: 1; user-select: none;
+  }
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 160px 1fr auto;
+    gap: 3rem; align-items: start;
+    padding: 2.5rem 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+  }
+  .exp-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .exp-period {
+    font-size: 0.75rem; font-weight: 400; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.35); padding-top: 0.2rem;
+  }
+  .exp-company {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem; font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .exp-role {
+    font-size: 0.8rem; font-weight: 300; color: var(--gold);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .exp-desc {
+    font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.55);
+    line-height: 1.75; max-width: 480px;
+  }
+  .exp-tag {
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    align-self: start;
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 8rem 4rem;
+    background: var(--cream);
+  }
+  .services-header { margin-bottom: 4rem; }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
+    background: var(--ink);
+  }
+  .service-card {
+    background: var(--paper); padding: 3rem 2.5rem;
+    position: relative; overflow: hidden;
+    transition: background 0.35s ease;
+    group: true;
+  }
+  .service-card:hover { background: var(--ink); }
+  .service-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 4rem; font-weight: 800;
+    color: var(--cream); line-height: 1;
+    margin-bottom: 2rem;
+    transition: color 0.35s ease;
+  }
+  .service-card:hover .service-num { color: rgba(255,255,255,0.08); }
+  .service-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem; font-weight: 700;
+    margin-bottom: 1rem; line-height: 1.2;
+    transition: color 0.35s ease;
+  }
+  .service-card:hover .service-title { color: white; }
+  .service-desc {
+    font-size: 0.85rem; font-weight: 300; line-height: 1.8;
+    color: var(--muted);
+    transition: color 0.35s ease;
+  }
+  .service-card:hover .service-desc { color: rgba(255,255,255,0.5); }
+  .service-arrow {
+    margin-top: 2rem; font-size: 1.5rem; color: var(--accent);
+    transition: transform 0.3s ease, color 0.35s ease;
+  }
+  .service-card:hover .service-arrow { transform: translate(4px, -4px); color: var(--gold); }
+
+  /* STUDIO */
+  .studio {
+    padding: 6rem 4rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    background: var(--paper);
+  }
+  .studio-visual {
+    background: var(--ink);
+    aspect-ratio: 1 / 1;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .studio-visual-inner {
+    text-align: center; position: relative; z-index: 2;
+  }
+  .studio-logo-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem; font-weight: 800;
+    color: white; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .studio-logo-sub {
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-top: 0.5rem;
+  }
+  .studio-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .studio-corner {
+    position: absolute; width: 60px; height: 60px;
+    border-color: var(--accent); border-style: solid;
+    opacity: 0.5;
+  }
+  .studio-corner.tl { top: 1.5rem; left: 1.5rem; border-width: 1px 0 0 1px; }
+  .studio-corner.tr { top: 1.5rem; right: 1.5rem; border-width: 1px 1px 0 0; }
+  .studio-corner.bl { bottom: 1.5rem; left: 1.5rem; border-width: 0 0 1px 1px; }
+  .studio-corner.br { bottom: 1.5rem; right: 1.5rem; border-width: 0 1px 1px 0; }
+  .studio-content .about-text { max-width: 440px; }
+  .studio-link {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); text-decoration: none; margin-top: 2rem;
+  }
+  .studio-link::after {
+    content: '→';
+    transition: transform 0.3s ease;
+  }
+  .studio-link:hover::after { transform: translateX(6px); }
+
+  /* EDUCATION */
+  .education {
+    padding: 5rem 4rem;
+    background: var(--cream);
+    display: grid; grid-template-columns: 1fr 2fr;
+    gap: 4rem; align-items: start;
+  }
+  .edu-card {
+    background: var(--paper);
+    padding: 2.5rem; border-top: 3px solid var(--accent2);
+  }
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;
+  }
+  .edu-school {
+    font-size: 0.8rem; font-weight: 500;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .edu-year {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    background: var(--ink); color: var(--paper);
+    font-size: 0.7rem; letter-spacing: 0.1em;
+  }
+
+  /* CONTACT */
+  .contact {
+    padding: 8rem 4rem;
+    background: var(--ink); color: white;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .contact-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 100%, rgba(200,80,42,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .contact-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 800; line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 2rem; position: relative; z-index: 1;
+  }
+  .contact-title span { color: var(--accent); }
+  .contact-sub {
+    font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.45);
+    margin-bottom: 3rem; position: relative; z-index: 1;
+  }
+  .contact-links {
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+    flex-wrap: wrap; position: relative; z-index: 1;
+  }
+  .contact-link {
+    padding: 1rem 2.5rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .contact-link.primary {
+    background: var(--accent); color: white;
+  }
+  .contact-link.primary:hover { background: white; color: var(--ink); }
+  .contact-link.secondary {
+    border: 1px solid rgba(255,255,255,0.2); color: white;
+  }
+  .contact-link.secondary:hover { border-color: white; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 4rem;
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: space-between;
+    color: rgba(255,255,255,0.25);
+    font-size: 0.72rem; letter-spacing: 0.08em;
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 300px; }
+    .about, .studio { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2rem; }
+    .experience, .services, .contact { padding: 5rem 2rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .education { grid-template-columns: 1fr; padding: 4rem 2rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .exp-tag { display: none; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">NM.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Available for Projects</div>
+    <h1 class="hero-name">
+      Nagul<br>
+      <span>Meera.</span>
+    </h1>
+    <p class="hero-tagline">Designer & developer bridging the gap between beautiful interfaces and seamless user experiences.</p>
+    <a href="#contact" class="hero-cta">
+      <span>Start a Project</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-circle"></div>
+      <div class="hero-circle-2"></div>
+      <div class="hero-initials">NM</div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Years Exp</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Internships</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ideas</div>
+      </div>
+    </div>
+    <div class="hero-badge">
+      <svg viewBox="0 0 110 110" width="110" height="110" fill="none">
+        <defs>
+          <path id="circle-text" d="M 55,55 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0"/>
+        </defs>
+        <text font-family="Syne, sans-serif" font-size="10.5" font-weight="700" fill="#d4a847" letter-spacing="2">
+          <textPath href="#circle-text">GRAPHIC DESIGN · UI/UX · FRONTEND · </textPath>
+        </text>
+      </svg>
+      <div class="hero-badge-center">✦</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">Graphic Design <span class="marquee-dot"></span></div>
+    <div class="marquee-item">UI/UX Design <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Frontend Development <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Figma <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Adobe Suite <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Responsive Web <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Event Management <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Branding <span class="marquee-dot"></span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="marquee-item">Graphic Design <span class="marquee-dot"></span></div>
+    <div class="marquee-item">UI/UX Design <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Frontend Development <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Figma <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Adobe Suite <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Responsive Web <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Event Management <span class="marquee-dot"></span></div>
+    <div class="marquee-item">Branding <span class="marquee-dot"></span></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <div class="section-label reveal">About Me</div>
+    <h2 class="section-title reveal reveal-delay-1">Designing<br>Impact.</h2>
+    <div class="about-grid">
+      <div class="about-card reveal reveal-delay-2">
+        <h4>Location</h4>
+        <p>Guntur, Andhra Pradesh, India</p>
+      </div>
+      <div class="about-card reveal reveal-delay-3">
+        <h4>Focus</h4>
+        <p>Visual Design & Web Development</p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="about-text reveal">I'm a creative professional combining graphic design, UI/UX expertise, and frontend development to craft purposeful, visually compelling digital experiences. My work is driven by a commitment to user-centered design and strategic thinking.</p>
+    <p class="about-text reveal reveal-delay-1">Currently serving as Admin at <strong>NormAssistStudios</strong>, where I lead branding, creative design, and event management projects that leave lasting impressions.</p>
+    <div class="skills-wrap reveal reveal-delay-2">
+      <span class="skill-tag">HTML5 / CSS3</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">Figma</span>
+      <span class="skill-tag">Adobe Illustrator</span>
+      <span class="skill-tag">Adobe Photoshop</span>
+      <span class="skill-tag">Salesforce</span>
+      <span class="skill-tag">LWC</span>
+      <span class="skill-tag">SEO Optimization</span>
+      <span class="skill-tag">Team Management</span>
+      <span class="skill-tag">Creative Problem Solving</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="exp-header">
+    <div>
+      <div class="section-label">Experience</div>
+      <h2 class="section-title">My Journey.</h2>
+    </div>
+    <div class="exp-number">03</div>
+  </div>
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div class="exp-period">Nov 2024<br>— Present</div>
+      <div>
+        <div class="exp-company">Indian Gas Agency</div>
+        <div class="exp-role">Admin Support Executive & Technical Staff</div>
+        <p class="exp-desc">Handling billing management, customer service, telecalling, and administrative operations. Providing technical support for installations and system maintenance while managing applications and client communications.</p>
+      </div>
+      <div class="exp-tag">Full-time</div>
+    </div>
+    <div class="exp-item reveal reveal-delay-1">
+      <div class="exp-period">Nov 2022<br>— Mar 2023</div>
+      <div>
+        <div class="exp-company">Levan Ventures</div>
+        <div class="exp-role">Graphic Design Intern</div>
+        <p class="exp-desc">Completed a 4-month internship demonstrating strong work ethic and creative collaboration. Adapted to real-time work culture, improved professional communication, and was recognized for dedication and commitment.</p>
+      </div>
+      <div class="exp-tag">Internship</div>
+    </div>
+    <div class="exp-item reveal reveal-delay-2">
+      <div class="exp-period">Aug 2022<br>— Oct 2022</div>
+      <div>
+        <div class="exp-company">SmartInternz</div>
+        <div class="exp-role">Salesforce Developer Intern</div>
+        <p class="exp-desc">8-week virtual internship covering Salesforce fundamentals, Flow automation, Apex development, and Lightning Web Components. Earned Apex Specialist & Process Automation Specialist Super Badges.</p>
+      </div>
+      <div class="exp-tag">Virtual</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div class="section-label reveal">What I Do</div>
+    <h2 class="section-title reveal reveal-delay-1">Services.</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-title">Graphic Design<br>& Branding</div>
+      <p class="service-desc">Custom visual identities, marketing materials, and brand systems that captivate and convert. From logo to full brand guidelines.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">02</div>
+      <div class="service-title">UI/UX<br>Design</div>
+      <p class="service-desc">User-centered interface design with Figma — wireframes, prototypes, and polished final designs for web and mobile.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">03</div>
+      <div class="service-title">Frontend<br>Development</div>
+      <p class="service-desc">Responsive websites built with HTML5, CSS3, and JavaScript. Clean code, fast performance, and SEO optimization.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <div class="service-title">Event<br>Planning</div>
+      <p class="service-desc">Corporate and social event execution from concept to completion. Flawless coordination for unforgettable experiences.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">05</div>
+      <div class="service-title">Creative<br>Marketing</div>
+      <p class="service-desc">Strategic visual marketing solutions that drive engagement — social media assets, campaign design, and content creation.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">06</div>
+      <div class="service-title">CRM<br>Solutions</div>
+      <p class="service-desc">Salesforce development and process automation — Flows, Apex code, LWC integration, and custom CRM workflows.</p>
+      <div class="service-arrow">↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- STUDIO SPOTLIGHT -->
+<section class="studio">
+  <div class="studio-visual reveal">
+    <div class="studio-grid-bg"></div>
+    <div class="studio-corner tl"></div>
+    <div class="studio-corner tr"></div>
+    <div class="studio-corner bl"></div>
+    <div class="studio-corner br"></div>
+    <div class="studio-visual-inner">
+      <div class="studio-logo-text">NormAssist<br>Studios</div>
+      <div class="studio-logo-sub">✦ Designing Impact ✦</div>
+    </div>
+  </div>
+  <div class="studio-content">
+    <div class="section-label reveal">My Studio</div>
+    <h2 class="section-title reveal reveal-delay-1">Norm.Alpha</h2>
+    <p class="about-text reveal reveal-delay-2">At Norm.Alpha, I specialize in creative graphic design and seamless event management, helping brands stand out and make a lasting impact. We combine innovation, expertise, and attention to detail to deliver stunning visuals and flawless events.</p>
+    <p class="about-text reveal reveal-delay-2">From custom branding and marketing materials to corporate and social event planning — every project is approached with precision, creativity, and strategic thinking.</p>
+    <a href="https://normassiststudios51575.store.link" target="_blank" class="studio-link reveal reveal-delay-3">Visit NormAssist Studios</a>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education" id="education">
+  <div>
+    <div class="section-label reveal">Education</div>
+    <h2 class="section-title reveal reveal-delay-1">Academic<br>Foundation.</h2>
+  </div>
+  <div class="edu-card reveal reveal-delay-2">
+    <div class="edu-degree">Bachelor of Commerce — Accounting & Computer Science</div>
+    <div class="edu-school">KVR & MKR College, Khajipalem</div>
+    <span class="edu-year">2020 — 2023</span>
+    <p style="margin-top:1.2rem; font-size:0.85rem; color:var(--muted); font-weight:300; line-height:1.7;">A dual-track BCom degree combining accounting foundations with computer science, providing the analytical and technical underpinning for a career at the intersection of design, business, and technology.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-bg"></div>
+  <div class="section-label" style="justify-content:center; color:var(--gold); margin-bottom:1.5rem;">
+    <span style="display:inline-block; width:1.5rem; height:1px; background:var(--gold); margin-right:0.75rem;"></span>
+    Let's Work Together
+  </div>
+  <h2 class="contact-title">Got a project<br>in <span>mind?</span></h2>
+  <p class="contact-sub">Let's bring your ideas to life with creativity, precision, and strategic thinking.</p>
+  <div class="contact-links">
+    <a href="mailto:nagulshaikh86@gmail.com" class="contact-link primary">Send an Email</a>
+    <a href="https://www.linkedin.com/in/nagul-meeradesign" target="_blank" class="contact-link secondary">LinkedIn</a>
+    <a href="https://normassiststudios51575.store.link" target="_blank" class="contact-link secondary">Studio</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Nagul Meera. All rights reserved.</span>
+  <span>Guntur, Andhra Pradesh, India</span>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .service-card, .skill-tag').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
