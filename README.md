@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @Nagultony
+- 👋 Hi, I’m @Nagul
 - 👀 I’m interested in ...graphic designing
 - 🌱 I’m currently learning ...ui/ux desiging
 - 💞️ I’m looking to collaborate on ...
